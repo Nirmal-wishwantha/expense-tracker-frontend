@@ -1,9 +1,167 @@
-import React from 'react'
+import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { Button } from '@mui/material';
+import routes from '../../common/navigation/routes';
+import { Route, Routes, Link, Navigate } from 'react-router-dom';
+
+const drawerWidth = 240;
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  }),
+);
+
+const AppBar = styled(MuiAppBar)(({ theme }) => ({
+  backgroundColor: theme.palette.grey[900], // Dark background for AppBar
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
 
 export default function Home() {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('expensive-token');
+    window.location.reload();
+  };
+
+  const getRoutes = () =>
+    routes.map((val, index) => (
+      <Route key={index} path={val.path} element={val.Element} icon={val.icon} />
+    ));
+
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
-  )
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+            Persistent Drawer
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+            backgroundColor: theme.palette.grey[800], // Dark background for Drawer
+            color: theme.palette.common.white, // White text in Drawer
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+          <Box sx={{ padding: '16px', display: 'flex', justifyContent: 'center' }}>
+            <Button
+              onClick={logout}
+              sx={{
+                color: 'white',
+                backgroundColor: '#f50057', // A vibrant background color
+                padding: '10px 20px',
+                borderRadius: '20px',
+                boxShadow: 2,
+                '&:hover': {
+                  backgroundColor: '#c51162',
+                  boxShadow: 4,
+                },
+              }}
+            >
+              Log Out
+            </Button>
+          </Box>
+        </DrawerHeader>
+        <Divider sx={{ backgroundColor: 'grey.700' }} />
+        <List>
+          {routes.map((val, index) => (
+            <Link key={index} to={val.path} style={{ textDecoration: 'none', color: 'white' }}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: 'white' }}>{val.icon}</ListItemIcon>
+                  <ListItemText primary={val.text} sx={{ color: 'white' }} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+      </Drawer>
+      <Main open={open}>
+        <DrawerHeader />
+        <Routes>
+          <Route path="*" element={<Navigate to={'/ExpensiveTable'} />} />
+          {getRoutes()}
+        </Routes>
+      </Main>
+    </Box>
+  );
 }

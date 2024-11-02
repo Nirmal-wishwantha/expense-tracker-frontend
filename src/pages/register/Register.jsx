@@ -45,7 +45,7 @@ export default function Register() {
       password: password
     }
 
-    instance.post('/api/v1/user/register', data)
+    instance.post('/user/register', data)
       .then((res) => {
         console.log(res);
 
