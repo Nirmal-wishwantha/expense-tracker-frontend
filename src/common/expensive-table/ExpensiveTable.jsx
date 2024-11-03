@@ -70,8 +70,8 @@ function ExpensiveTable() {
             sx={{
                 width: '100%',
                 // py: 8,
-                margin:0,
-                padding:0,
+                margin: 0,
+                padding: 0,
                 background: 'linear-gradient(135deg, #2c3e50, #3b3b98, #2b5876, #1c2833)',
                 backgroundSize: 'cover',
                 minHeight: '100vh',
@@ -89,7 +89,7 @@ function ExpensiveTable() {
                                 WebkitTextFillColor: 'transparent',
                                 fontWeight: 600,
                                 letterSpacing: 1.2,
-                                
+
                             }}
                         >
                             Transaction Data

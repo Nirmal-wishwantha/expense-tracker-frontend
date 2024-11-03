@@ -10,22 +10,23 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Button } from '@mui/material';
-import routes from '../../common/navigation/routes';
+import routes from '../../common/navigation/routes'; // Ensure this path is correct
 import { Route, Routes, Link, Navigate } from 'react-router-dom';
+import SendIcon from '@mui/icons-material/Send';
+import LogoutIcon from '@mui/icons-material/Logout';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
 
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme }) => ({
+  ({ theme, open }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(0),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -42,18 +43,10 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.grey[900], // Dark background for AppBar
+  backgroundColor: '#121212', // Dark background for AppBar
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
   }),
 }));
 
@@ -66,16 +59,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function Home() {
+  const [open, setOpen] = React.useState(true);
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
 
   const logout = () => {
     localStorage.removeItem('expensive-token');
@@ -90,16 +75,18 @@ export default function Home() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed">
         <Toolbar>
+
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={() => setOpen(!open)}
             edge="start"
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
+
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Persistent Drawer
@@ -113,8 +100,8 @@ export default function Home() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: theme.palette.grey[800], // Dark background for Drawer
-            color: theme.palette.common.white, // White text in Drawer
+            backgroundColor: '#1e1e1e', // Dark background for Drawer
+            color: '#ffffff',
           },
         }}
         variant="persistent"
@@ -122,39 +109,50 @@ export default function Home() {
         open={open}
       >
         <DrawerHeader>
-          <Box sx={{ padding: '16px', display: 'flex', justifyContent: 'center' }}>
-            <Button
-              onClick={logout}
-              sx={{
-                color: 'white',
-                backgroundColor: '#f50057', // A vibrant background color
-                padding: '10px 20px',
-                borderRadius: '20px',
-                boxShadow: 2,
-                '&:hover': {
-                  backgroundColor: '#c51162',
-                  boxShadow: 4,
-                },
-              }}
-            >
-              Log Out
-            </Button>
+          <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
+            <Typography variant="h6">Menu</Typography>
           </Box>
+
+          <IconButton onClick={() => setOpen(false)} sx={{ color: 'white' }}>
+            <FirstPageIcon />
+          </IconButton>
+
         </DrawerHeader>
-        <Divider sx={{ backgroundColor: 'grey.700' }} />
+
+        <Divider sx={{ backgroundColor: '#424242' }} />
+
         <List>
           {routes.map((val, index) => (
             <Link key={index} to={val.path} style={{ textDecoration: 'none', color: 'white' }}>
               <ListItem disablePadding>
                 <ListItemButton>
-                  <ListItemIcon sx={{ color: 'white' }}>{val.icon}</ListItemIcon>
-                  <ListItemText primary={val.text} sx={{ color: 'white' }} />
+                  <ListItemIcon sx={{ color: '#ffffff' }}>{val.icon}</ListItemIcon>
+                  <ListItemText primary={val.text} sx={{ color: '#ffffff' }} />
                 </ListItemButton>
               </ListItem>
             </Link>
           ))}
+
+
+          <Box sx={{justifyContent:'center',display:'flex',margin:1}}> 
+
+            <Button 
+            variant="contained" 
+            endIcon={<LogoutIcon />} 
+            sx={{backgroundColor:'#b30000'}}
+            onClick={logout}
+            >
+              Log out
+            </Button>
+          </Box>
+
+
         </List>
+
       </Drawer>
+
+
+
       <Main open={open}>
         <DrawerHeader />
         <Routes>
@@ -162,6 +160,7 @@ export default function Home() {
           {getRoutes()}
         </Routes>
       </Main>
+
     </Box>
   );
 }

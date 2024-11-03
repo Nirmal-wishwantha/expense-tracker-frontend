@@ -9,8 +9,15 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: { main: '#90caf9' },
-    background: { default: '#121212', paper: '#1d1d1d' },
-    text: { primary: '#ffffff' },
+    secondary: { main: '#f48fb1' },
+    background: {
+      default: '#121212', // Default dark background
+      paper: '#1d1d1d',
+    },
+    text: { primary: '#ffffff', secondary: '#b0bec5' },
+  },
+  typography: {
+    fontFamily: 'Roboto, sans-serif',
   },
 });
 
@@ -62,11 +69,27 @@ function AddExpensive() {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Box sx={{ marginTop: 10, width: '100%' }}>
-        <Container maxWidth="sm" style={{ paddingTop: '2rem' }}>
-          <Typography variant="h4" align="center" gutterBottom>
-            Enter Transaction Details
-          </Typography>
+      <Box sx={{ width: '100%', backgroundColor: 'background.default', minHeight: '100vh', paddingBottom: '2rem' }}>
+        <Container maxWidth="sm" sx={{ pt: 3, backgroundColor: 'transparent' }}>
+
+          <Box sx={{justifyContent:'center',alignItems:'center',display:'flex'}}>
+
+            <Typography variant="h4"
+              sx={{
+                color: darkTheme.palette.primary.main,
+                background: 'linear-gradient(45deg, #90caf9, #f48fb1)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontWeight: 600,
+                letterSpacing: 1.2,
+
+              }} >
+              Enter Transaction Details
+            </Typography>
+
+          </Box>
+
+
           <Box
             component="form"
             onSubmit={handleSubmit}
