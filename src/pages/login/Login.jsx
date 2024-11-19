@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Paper, Avatar, Link } from '@mui/material';
 import { LockOutlined, Password } from '@mui/icons-material';
@@ -10,6 +11,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+=======
+import React from 'react';
+import { Box, Button, TextField, Typography, Paper, Avatar, Link } from '@mui/material';
+import { LockOutlined } from '@mui/icons-material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link as RouterLink } from 'react-router-dom';
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
 
 const theme = createTheme({
   palette: {
@@ -30,6 +38,7 @@ const theme = createTheme({
   },
 });
 
+<<<<<<< HEAD
 
 export default function Login() {
   const navigate = useNavigate();
@@ -87,6 +96,9 @@ export default function Login() {
   }
 
 
+=======
+export default function Login() {
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -124,7 +136,10 @@ export default function Login() {
             fullWidth
             margin="normal"
             sx={{ '& .MuiOutlinedInput-root': { color: 'text.primary' } }}
+<<<<<<< HEAD
             onChange={(e) => setEmail(e.target.value)}
+=======
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
           />
           <TextField
             label="Password"
@@ -133,13 +148,17 @@ export default function Login() {
             fullWidth
             margin="normal"
             sx={{ '& .MuiOutlinedInput-root': { color: 'text.primary' } }}
+<<<<<<< HEAD
             onChange={(e) => setPassword(e.target.value)}
+=======
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
           />
           <Button
             variant="contained"
             color="primary"
             fullWidth
             sx={{ mt: 2, animation: 'pulse 2s infinite' }}
+<<<<<<< HEAD
             onClick={loginFuntion}
           >
             Login
@@ -148,6 +167,14 @@ export default function Login() {
           <Typography align="center" mt={2}>
             Don’t have an account?{' '}
             <Link onClick={navigateRegister} color="primary">
+=======
+          >
+            Login
+          </Button>
+          <Typography align="center" mt={2}>
+            Don’t have an account?{' '}
+            <Link component={RouterLink} to="/register" color="primary">
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
               Register here
             </Link>
           </Typography>

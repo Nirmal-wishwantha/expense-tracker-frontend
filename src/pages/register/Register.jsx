@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Paper, Avatar, Link } from '@mui/material';
 import { Email, Password, PersonAdd } from '@mui/icons-material';
@@ -6,6 +7,13 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import instance from '../../services/AxiosOder';
 import { toast } from 'react-toastify'; 
 
+=======
+import React from 'react';
+import { Box, Button, TextField, Typography, Paper, Avatar, Link } from '@mui/material';
+import { PersonAdd } from '@mui/icons-material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link as RouterLink } from 'react-router-dom';
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
 
 const theme = createTheme({
   palette: {
@@ -27,6 +35,7 @@ const theme = createTheme({
 });
 
 export default function Register() {
+<<<<<<< HEAD
 
   const navigation = useNavigate();
 
@@ -82,6 +91,8 @@ export default function Register() {
   }
 
 
+=======
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -112,16 +123,23 @@ export default function Register() {
           <Typography variant="h5" align="center" gutterBottom>
             Register
           </Typography>
+<<<<<<< HEAD
 
+=======
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
           <TextField
             label="Username"
             variant="outlined"
             fullWidth
             margin="normal"
             sx={{ '& .MuiOutlinedInput-root': { color: 'text.primary' } }}
+<<<<<<< HEAD
             onChange={(e) => setName(e.target.value)}
           />
 
+=======
+          />
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
           <TextField
             label="Email"
             type="email"
@@ -129,9 +147,13 @@ export default function Register() {
             fullWidth
             margin="normal"
             sx={{ '& .MuiOutlinedInput-root': { color: 'text.primary' } }}
+<<<<<<< HEAD
             onChange={(e) => setEmail(e.target.value)}
           />
 
+=======
+          />
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
           <TextField
             label="Password"
             type="password"
@@ -139,9 +161,13 @@ export default function Register() {
             fullWidth
             margin="normal"
             sx={{ '& .MuiOutlinedInput-root': { color: 'text.primary' } }}
+<<<<<<< HEAD
             onChange={(e) => setPassword(e.target.value)}
           />
 
+=======
+          />
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
           <TextField
             label="Confirm Password"
             type="password"
@@ -150,18 +176,27 @@ export default function Register() {
             margin="normal"
             sx={{ '& .MuiOutlinedInput-root': { color: 'text.primary' } }}
           />
+<<<<<<< HEAD
 
+=======
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
           <Button
             variant="contained"
             color="primary"
             fullWidth
             sx={{ mt: 2, animation: 'pulse 2s infinite' }}
+<<<<<<< HEAD
             onClick={userRegister}
           >
             Register
           </Button>
 
 
+=======
+          >
+            Register
+          </Button>
+>>>>>>> dd9c2f9d18b6be36bb76cdb5f3f3ccafa0536fb2
           <Typography align="center" mt={2}>
             Already registered?{' '}
             <Link component={RouterLink} to="/login" color="primary">
