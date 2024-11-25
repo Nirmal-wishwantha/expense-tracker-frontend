@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Paper, Avatar, Link } from '@mui/material';
-import { LockOutlined } from '@mui/icons-material';
+import { LockOutlined, Password } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom';
+import instance from '../../services/AxiosOder';
+import { toast } from 'react-toastify';
+
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 const theme = createTheme({
   palette: {
@@ -23,7 +30,63 @@ const theme = createTheme({
   },
 });
 
+
 export default function Login() {
+  const navigate = useNavigate();
+
+  const navigateRegister = () => {
+    navigate('/user/register');
+  };
+
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const loginFuntion = () => {
+
+    const data = {
+      email: email,
+      password: password
+    }
+
+    instance.post('/user/login', data)
+      .then((res) => {
+        console.log(res);
+
+        toast.success("Login Successful! You have Login successfully.", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          pauseOnHover: true,
+        });
+
+        localStorage.setItem('expensive-token', res.data.token);
+        localStorage.setItem('expensive-id', res.data.userId)
+
+        setTimeout(() => {
+          navigate('/home');
+          window.location.reload();
+        }, 2000);
+
+      })
+
+      .catch((err) => {
+        console.log(err);
+        toast.error("Login Faild! You have Login Faild.", {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          pauseOnHover: true,
+        });
+      })
+
+  }
+
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -61,6 +124,7 @@ export default function Login() {
             fullWidth
             margin="normal"
             sx={{ '& .MuiOutlinedInput-root': { color: 'text.primary' } }}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             label="Password"
@@ -69,18 +133,21 @@ export default function Login() {
             fullWidth
             margin="normal"
             sx={{ '& .MuiOutlinedInput-root': { color: 'text.primary' } }}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Button
             variant="contained"
             color="primary"
             fullWidth
             sx={{ mt: 2, animation: 'pulse 2s infinite' }}
+            onClick={loginFuntion}
           >
             Login
           </Button>
+
           <Typography align="center" mt={2}>
             Don’t have an account?{' '}
-            <Link component={RouterLink} to="/register" color="primary">
+            <Link onClick={navigateRegister} color="primary">
               Register here
             </Link>
           </Typography>
